@@ -6,7 +6,7 @@
       "type": "eventHubTrigger",
       "name": "event",
       "direction": "in",
-      "eventHubName": "python-worker-ci",
+      "eventHubName": "python-worker-eventhub-ci-linux",
       "connection": "AzureWebJobsEventHubConnectionString"
     },
     {
