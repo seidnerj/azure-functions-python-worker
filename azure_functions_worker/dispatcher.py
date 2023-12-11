@@ -343,8 +343,10 @@ class Dispatcher(metaclass=DispatcherMeta):
                     result=protos.StatusResult(
                         status=protos.StatusResult.Success)))
 
+        logger.info('VICTORIA: Before trying to index functions')
         try:
             fx_metadata_results = self.index_functions(function_path)
+            logger.info('VICTORIA: After trying to index functions')
 
             return protos.StreamingMessage(
                 request_id=request.request_id,
@@ -354,6 +356,8 @@ class Dispatcher(metaclass=DispatcherMeta):
                         status=protos.StatusResult.Success)))
 
         except Exception as ex:
+            logger.info(
+            'VICTORIA: ERROR OCCURRED')
             return protos.StreamingMessage(
                 request_id=self.request_id,
                 function_metadata_response=protos.FunctionMetadataResponse(
@@ -620,6 +624,7 @@ class Dispatcher(metaclass=DispatcherMeta):
                 function_environment_reload_response=failure_response)
 
     def index_functions(self, function_path: str):
+        logger.info('VICTORIA: Inside index_functions')
         indexed_functions = loader.index_function_app(function_path)
         logger.info('Indexed function app and found %s functions',
                     len(indexed_functions))
