@@ -5,6 +5,7 @@ import operator
 import pathlib
 import typing
 import uuid
+from .logging import logger
 
 from . import bindings as bindings_utils
 from . import protos
@@ -84,6 +85,7 @@ class Registry:
     def validate_binding_direction(binding_name: str,
                                    binding_direction: str,
                                    func_name: str):
+        logger.info('VICTORIA: Inside validate_binding_direction')
         if binding_direction == protos.BindingInfo.inout:
             raise FunctionLoadError(
                 func_name,

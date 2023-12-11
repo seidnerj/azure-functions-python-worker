@@ -210,9 +210,16 @@ def load_function(name: str, directory: str, script_file: str,
                'python-packages Path exists: '
                f'{os.path.exists(CUSTOMER_PACKAGES_PATH)}')
 def index_function_app(function_path: str):
+    logger.info('VICTORIA: Inside index_function_app')
     module_name = pathlib.Path(function_path).stem
+    logger.info('VICTORIA: module_name: %s', module_name)
+    logger.info('VICTORIA: '
+                f'Sys Path: {sys.path}, Sys Module: {sys.modules},'
+               'python-packages Path exists: '
+               f'{os.path.exists(CUSTOMER_PACKAGES_PATH)} '
+               f'Customer Packages Path: {CUSTOMER_PACKAGES_PATH}')
     imported_module = importlib.import_module(module_name)
-
+    logger.info('VICTORIA: after import_module')
     from azure.functions import FunctionRegister
     app: Optional[FunctionRegister] = None
     for i in imported_module.__dir__():
