@@ -12,6 +12,7 @@ import time
 from datetime import timedelta
 from os import PathLike, fspath
 from typing import Optional, Dict
+import subprocess
 
 from google.protobuf.duration_pb2 import Duration
 
@@ -219,6 +220,15 @@ def index_function_app(function_path: str):
                f'{os.path.exists(CUSTOMER_PACKAGES_PATH)} '
                f'Customer Packages Path: {CUSTOMER_PACKAGES_PATH}')
     imported_module = importlib.import_module(module_name)
+    # segfaulting_code = "import importlib ; importlib.import_module('function_app.py')"
+    # try:
+    #     subprocess.run(["python", "-c", segfaulting_code], check=True)
+        
+    # except subprocess.CalledProcessError as e:
+    #     if e.returncode == -11:
+    #         logger.info('VICTORIA: Segfault detected')
+    #     else:
+    #         logger.info('VICTORIA: e.returncode: %s', e.returncode)
     logger.info('VICTORIA: after import_module')
     from azure.functions import FunctionRegister
     app: Optional[FunctionRegister] = None
