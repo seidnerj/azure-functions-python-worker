@@ -85,7 +85,7 @@ class Registry:
     def validate_binding_direction(binding_name: str,
                                    binding_direction: str,
                                    func_name: str):
-        logger.info('VICTORIA: Inside validate_binding_direction')
+        #logger.info('VICTORIA: Inside validate_binding_direction')
         if binding_direction == protos.BindingInfo.inout:
             raise FunctionLoadError(
                 func_name,
