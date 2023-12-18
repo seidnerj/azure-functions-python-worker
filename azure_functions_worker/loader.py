@@ -16,7 +16,7 @@ import subprocess
 
 from google.protobuf.duration_pb2 import Duration
 
-from . import protos, functions
+from . import protos, functions, constants
 from .bindings.retrycontext import RetryPolicy
 from .constants import MODULE_NOT_FOUND_TS_URL, SCRIPT_FILE_NAME, \
     PYTHON_LANGUAGE_RUNTIME, RETRY_POLICY, CUSTOMER_PACKAGES_PATH
@@ -219,17 +219,32 @@ def index_function_app(function_path: str):
                'python-packages Path exists: '
                f'{os.path.exists(CUSTOMER_PACKAGES_PATH)} '
                f'Customer Packages Path: {CUSTOMER_PACKAGES_PATH}')
+    pre_sys_path = sys.path
+    pre_path = os.path.abspath(protos.__file__)
     imported_module = importlib.import_module(module_name)
-    # segfaulting_code = "import importlib ; importlib.import_module('function_app.py')"
+    post_sys_path = sys.path
+    post_path = os.path.abspath(protos.__file__)
+    print("test")
+    # if "" == protos.BindingInfo.inout:
+    #         logger.info("VICTORIA: protos check")
+    # segfaulting_code = "from . import protos ; os.path.abspath(protos.__file__)"
     # try:
-    #     subprocess.run(["python", "-c", segfaulting_code], check=True)
-        
+    #     subprocess.run(["python", "-c", segfaulting_code], check=True) 
     # except subprocess.CalledProcessError as e:
     #     if e.returncode == -11:
     #         logger.info('VICTORIA: Segfault detected')
     #     else:
     #         logger.info('VICTORIA: e.returncode: %s', e.returncode)
-    logger.info('VICTORIA: after import_module')
+    #logger.info('VICTORIA: after import_module')
+    # test = protos.RpcRetryOptions(
+    #     max_retry_count=0,
+    #     retry_strategy=RetryPolicy.STRATEGY.value,
+    #     minimum_interval=0,
+    #     maximum_interval=0
+    # )
+
+    # if "" == protos.BindingInfo.inout:
+    #         logger.info("VICTORIA: protos check")
     from azure.functions import FunctionRegister
     app: Optional[FunctionRegister] = None
     for i in imported_module.__dir__():
