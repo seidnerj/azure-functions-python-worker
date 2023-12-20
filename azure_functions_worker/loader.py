@@ -224,7 +224,7 @@ def index_function_app(function_path: str):
     imported_module = importlib.import_module(module_name)
     post_sys_path = sys.path
     post_path = os.path.abspath(protos.__file__)
-    print("test")
+    logger.info('VICTORIA: post_path: %s', post_path)
     # if "" == protos.BindingInfo.inout:
     #         logger.info("VICTORIA: protos check")
     # segfaulting_code = "from . import protos ; os.path.abspath(protos.__file__)"
