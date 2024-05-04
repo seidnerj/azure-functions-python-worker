@@ -134,6 +134,7 @@ class BuildGRPC:
         staging_root_dir = build_dir / "protos"
         staging_dir = staging_root_dir / "azure_functions_worker" / "protos"
         built_protos_dir = build_dir / "built_protos"
+        prebuilt_protos_dir = root / "prebuilt_protos"
 
         if os.path.exists(build_dir):
             shutil.rmtree(build_dir)
@@ -178,8 +179,15 @@ class BuildGRPC:
         )
 
         if not compiled_files:
-            print("grpc_tools.protoc produced no Python files", file=sys.stderr)
-            sys.exit(1)
+            print("grpc_tools.protoc produced no Python files, using prebuilt protos.", file=sys.stderr)
+            # sys.exit(1)
+
+            os.rmdir(built_protos_dir)
+            shutil.copytree(prebuilt_protos_dir, built_protos_dir)
+
+            compiled_files = glob.glob(
+                str(built_protos_dir / "**" / "*.py"), recursive=True
+            )
 
         # Needed to support absolute imports in files. See
         # https://github.com/protocolbuffers/protobuf/issues/1491
