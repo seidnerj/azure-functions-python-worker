@@ -166,6 +166,7 @@ class BuildGRPC:
                 stdout=sys.stdout,
                 stderr=sys.stderr,
                 cwd=staging_root_dir,
+                shell=True
             )
 
         compiled_files = glob.glob(
