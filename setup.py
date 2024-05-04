@@ -149,19 +149,23 @@ class BuildGRPC:
         ]
 
         for proto in protos:
+            subprocess_args = [
+                sys.executable,
+                "-m",
+                "grpc_tools.protoc",
+                "--proto_path",
+                str(staging_dir),
+                "--python_out",
+                str(built_protos_dir),
+                "--grpc_python_out",
+                str(built_protos_dir),
+                os.sep.join((str(staging_dir), proto)),
+            ]
+
+            print(subprocess_args)
+
             subprocess.run(
-                [
-                    sys.executable,
-                    "-m",
-                    "grpc_tools.protoc",
-                    "-I",
-                    str(staging_dir),
-                    "--python_out",
-                    str(built_protos_dir),
-                    "--grpc_python_out",
-                    str(built_protos_dir),
-                    os.sep.join((str(staging_dir), proto)),
-                ],
+                subprocess_args,
                 check=True,
                 stdout=sys.stdout,
                 stderr=sys.stderr,
