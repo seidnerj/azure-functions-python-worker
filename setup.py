@@ -450,11 +450,18 @@ class Webhost(distutils.cmd.Command):
 
 class Clean(distutils.cmd.Command):
     description = "Clean up build generated files"
-    user_options = []
+    user_options = [
+        (
+            "all",
+            None,
+            "(Compatibility with original clean command)",
+        )
+]
 
     def __init__(self, dist: Distribution):
         super().__init__(dist)
         self.dir_list_to_delete = ["build"]
+        self.all = False
 
     def initialize_options(self) -> None:
         pass
